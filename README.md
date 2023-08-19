@@ -1,5 +1,5 @@
 # Image-Classification
-# Deep Learning Project
+#Deep Learning Project
 Team Members:
 # Sanjana Balaji (21BSR18018)
 # Sneha V Prabhu (21BSR18020)

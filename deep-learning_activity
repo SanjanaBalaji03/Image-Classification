@@ -70,3 +70,30 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
               metrics=['accuracy'])
 
+epochs=25
+
+CNN_model = model.fit(
+  training_images,
+  validation_data=validation_images,
+  epochs=epochs
+)
+
+# Evaluate the model on validation data
+val_accuracy = CNN_model.history['val_accuracy'][-1]
+print(f"Validation accuracy with dropout rate {dropout_rate}: {val_accuracy}")
+
+# Check if this model is the best so far
+if val_accuracy > best_accuracy:
+   best_accuracy = val_accuracy
+   best_model = model
+
+def predict_input_image(img):
+  img_4d=img.reshape(-1,180,180,3)
+  prediction=model.predict(img_4d)[0]
+  return {dress_classes[i]: float(prediction[i]) for i in range(3)}
+  # Save the best model to a file
+model.save('/content/drive/My Drive/DL/best_model.h5')
+
+!pip install gradio
+import gradio as gr
+

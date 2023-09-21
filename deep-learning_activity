@@ -1,0 +1,30 @@
+from google.colab import drive
+drive.mount('/content/drive')
+
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import tensorflow as tf
+import PIL
+import pathlib
+
+from PIL import Image
+from pathlib import Path
+from tensorflow.keras import layers,models
+
+loaded_data=Path("/content/drive/My Drive/DL")
+
+total_image_count=0
+
+dress_categories=list(loaded_data.glob('*'))
+if len(dress_categories)>0:
+   for dress_categories in dress_categories:
+       dress_images=list(dress_categories.glob('*.jpg'))+list(dress_categories('*.png'))
+       if len(dress_images)>0:
+          total_image_count+=len(dress_images)
+   print("Total number of dress images found:",total_image_count)
+else:
+print("No dress categories (subfolders) found in the directory.)
+
+set_height, set_width=180,180
+batch_size=32

@@ -28,3 +28,45 @@ print("No dress categories (subfolders) found in the directory.)
 
 set_height, set_width=180,180
 batch_size=32
+
+
+
+
+
+training_images = tf.keras.preprocessing.image_dataset_from_directory(
+    loaded_data,
+    subset="training",
+    validation_split = 0.25,
+    seed=123,
+    image_size=(set_height, set_width),
+    batch_size=batch_size
+)
+validation_images = tf.keras.preprocessing.image_dataset_from_directory(
+    loaded_data,
+    subset="validation",  # Use "validation" for the validation subset
+    validation_split=0.25,  # Adjust this value as needed
+    seed=123,
+    image_size=(set_height, set_width),
+    batch_size=batch_size
+)
+dress_classes = training_images.class_names
+print(dress_classes)
+dataset_classes = 3
+from tensorflow.keras.models import Sequential
+model = Sequential([])
+
+layers.experimental.preprocessing.Rescaling(1./255, input_shape=(set_height, set_width, 3))
+model.add(layers.Conv2D(16, 3, padding='same', activation='relu'))
+model.add(layers.MaxPooling2D())
+model.add(layers.Conv2D(32, 3, padding='same', activation='relu'))
+model.add(layers.MaxPooling2D())
+model.add(layers.Conv2D(64, 3, padding='same', activation='relu'))
+model.add(layers.MaxPooling2D())
+model.add(layers.Conv2D(128, 3, padding='same', activation='relu'))
+model.add(layers.Flatten())
+model.add(layers.Dense(128, activation='relu'))
+model.add(layers.Dense(dataset_classes,activation='softmax'))
+model.compile(optimizer='adam',
+              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+              metrics=['accuracy'])
+

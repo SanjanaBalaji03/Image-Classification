@@ -29,10 +29,6 @@ print("No dress categories (subfolders) found in the directory.)
 set_height, set_width=180,180
 batch_size=32
 
-
-
-
-
 training_images = tf.keras.preprocessing.image_dataset_from_directory(
     loaded_data,
     subset="training",
@@ -59,8 +55,6 @@ dropout_rates = [0.0, 0.2, 0.4, 0.6]  # Define a list of dropout rates to try
 best_model = None
 best_accuracy = 0.6
 dropout_rate = [0.4]
-
-
 
 layers.experimental.preprocessing.Rescaling(1./255, input_shape=(set_height, set_width, 3))
 model.add(layers.Conv2D(16, 3, padding='same', activation='relu'))
@@ -108,4 +102,3 @@ image = gr.inputs.Image(shape=(180,180))
 label = gr.outputs.Label(num_top_classes=3)
 
 gr.Interface(fn=predict_input_image, inputs=image, outputs=label,interpretation='default').launch(debug='True',share=True)
-
